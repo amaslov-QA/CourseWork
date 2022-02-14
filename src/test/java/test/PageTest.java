@@ -40,6 +40,15 @@ public class PageTest {
 
     }
     @Test
+    void shouldAuthorizationIsNoSuccessful() {
+        Configuration.holdBrowserOpen = true;
+        val cardInfo = new DataHelper().getValidCardInfo();
+        val paymentPage = new OrderPage().getPaymentPage();
+        paymentPage.fillingOutTheForm(cardInfo);
+        paymentPage.getNotificationNo();
+
+    }
+    @Test
     void shouldCardInfoWithNameWithoutSpace() {
         Configuration.holdBrowserOpen = true;
         val cardInfo = new DataHelper().getValidCardInfoWithNameWithoutSpace();
