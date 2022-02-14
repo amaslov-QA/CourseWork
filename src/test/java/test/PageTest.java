@@ -48,6 +48,25 @@ public class PageTest {
         paymentPage.getNotificationNo();
 
     }
+    @Test
+    void shouldValidCardInfoNameInLatin() {
+        Configuration.holdBrowserOpen = true;
+        val cardInfo = new DataHelper().getValidCardInfoNameInLatin();
+        val paymentPage = new OrderPage().getPaymentPage();
+        paymentPage.fillingOutTheForm(cardInfo);
+        paymentPage.getNotificationNo();
+
+    }
+    @Test
+    void shouldInvalidCardInfoLastMonth(){
+        Configuration.holdBrowserOpen = true;
+        val cardInfo = new DataHelper().getInvalidCardInfoLastMonth();
+        val paymentPage = new OrderPage().getPaymentPage();
+        paymentPage.fillingOutTheForm(cardInfo);
+        paymentPage.getNotificationNo();
+
+    }
+
 
 }
 

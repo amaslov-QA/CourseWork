@@ -151,7 +151,7 @@ public class DataHelper {
         return new CardInfo(getValidCardNumber(), generateMonth(), generateYear(), "AN", generateCVC());
     }
 
-    public CardInfo getVInvalidCardInfoLastMonth() {
+    public CardInfo getInvalidCardInfoLastMonth() {
         return new CardInfo(getValidCardNumber(), generateLastMonth(), generateCurrentYear(), generateOwner(), generateCVC());
     }
 
