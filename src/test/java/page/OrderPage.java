@@ -20,8 +20,4 @@ public class OrderPage {
         return new PaymentPage();
     }
 
-    public CreditPage getCreditPage() {
-        buttonBuyInCredit.click();
-        return new CreditPage();
-    }
 }
