@@ -6,7 +6,7 @@ import help.DataHelper;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -29,6 +29,7 @@ public class PaymentPage {
     private SelenideElement wrongFormatMonthField = $x("//*[text()='Месяц']/following-sibling::*/input[@class='input__sub']");
     private SelenideElement wrongFormatYearField = $x("//*[text()='Год']/following-sibling::*/input[@class='input__sub']");
     private SelenideElement wrongFormatOwnerField = $x("//*[text()='Владелец']/following-sibling::*/input[@class='input__sub']");
+    private SelenideElement buttonSendARequest = $x("//*[text()='Отправляем запрос в Банк...']");
 
 
     public PaymentPage() {
@@ -36,10 +37,15 @@ public class PaymentPage {
     }
 
     public void getNotificationOk() {
-        notificationStatusOk.shouldBe(visible).shouldHave(Condition.text("Операция одобрена Банком."), Duration.ofSeconds(15));
+        notificationStatusOk.shouldBe(visible).shouldHave(text("Операция одобрена Банком."), Duration.ofSeconds(15));
     }
+
     public void getNotificationNo() {
-        notificationContent.shouldBe(visible).shouldHave(Condition.text("Ошибка!Банк отказал в проведении операции."), Duration.ofSeconds(15));
+        notificationContent.shouldBe(visible).shouldHave(text("Ошибка!Банк отказал в проведении операции."), Duration.ofSeconds(15));
+    }
+
+    public void getButtonSendARequest() {
+        buttonSendARequest.shouldBe(visible, enabled).shouldHave(text("Отправляем запрос в Банк..."));
     }
 
     public void fillingOutTheForm(DataHelper.CardInfo info) {
@@ -51,35 +57,102 @@ public class PaymentPage {
         buttonContinue.click();
     }
 
+
+    public void clickButtonContinue() {
+        buttonContinue.click();
+    }
+
     public void getErrorNotificationCardNumberRequired() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Поле обязательно для заполнения"));
+        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(text("Поле обязательно для заполнения"));
     }
 
     public void getErrorNotificationMonthRequired() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Поле обязательно для заполнения"));
+        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(text("Поле обязательно для заполнения"));
     }
 
     public void getErrorNotificationYearRequired() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Поле обязательно для заполнения"));
+        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(text("Поле обязательно для заполнения"));
     }
 
     public void getErrorNotificationOwnerRequired() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Поле обязательно для заполнения"));
+        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(text("Поле обязательно для заполнения"));
     }
 
     public void getErrorNotificationCVCRequired() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Поле обязательно для заполнения"));
+        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(text("Поле обязательно для заполнения"));
     }
 
-    public void wrongFormatMonthField() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Неверно указан срок действия карты"));
+    public void notGetErrorNotificationOwnerRequired() {
+        errorOwnerFieldRequired.shouldBe(hidden);
     }
 
-    public void wrongFormatYearField() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Неверно указан срок действия карты"));
+    public void notGetErrorNotificationCardNumberRequired() {
+        errorCardNumberFieldRequired.shouldBe(hidden);
     }
 
-    public void wrongFormatOwnerField() {
-        errorCardNumberFieldRequired.shouldBe(visible).shouldHave(Condition.text("Неверный формат заполнения"));
+    public void notGetErrorNotificationMonthRequired() {
+        errorMonthFieldRequired.shouldBe(hidden);
     }
+
+    public void notGetErrorNotificationYearRequired() {
+        errorYearFieldRequired.shouldBe(hidden);
+    }
+
+    public void getWrongFormatMonthField() {
+        wrongFormatMonthField.shouldBe(visible).shouldHave(text("Неверно указан срок действия карты"));
+    }
+
+    public void getWrongFormatYearField() {
+        wrongFormatYearField.shouldBe(visible).shouldHave(text("Неверно указан срок действия карты"));
+    }
+
+    public void getWrongCardExpiredYearField() {
+        wrongFormatYearField.shouldBe(visible).shouldHave(text("Истёк срок действия карты"));
+    }
+
+    public void getWrongFormatOwnerField() {
+        wrongFormatOwnerField.shouldBe(visible).shouldHave(text("Неверный формат заполнения"));
+    }
+
+    public void notGetErrorNotificationCVCRequired() {
+        errorCVCFieldRequired.shouldBe(hidden);
+    }
+
+    public void notGetWrongFormatMonthField() {
+        wrongFormatMonthField.shouldBe(hidden);
+    }
+
+    public void notGetWrongFormatYearField() {
+        wrongFormatYearField.shouldBe(hidden);
+    }
+
+    public void notGetWrongFormatOwnerField() {
+        wrongFormatOwnerField.shouldBe(hidden);
+    }
+
+    public String getValue(SelenideElement field) {
+        String fieldValue = field.val();
+        return fieldValue;
+    }
+
+    public String getValueOwner() {
+        return getValue(fieldOwner);
+    }
+
+    public String getValueMonth() {
+        return getValue(fieldMonth);
+    }
+
+    public String getValueYear() {
+        return getValue(fieldYear);
+    }
+
+    public String getValueCVC() {
+        return getValue(fieldCVC);
+    }
+
+    public static String removeLastChar(String s) {
+        return (s == null || s.length() == 0) ? null : (s.substring(0, s.length() - 1));
+    }
+
 }
