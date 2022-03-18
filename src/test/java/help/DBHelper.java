@@ -59,7 +59,7 @@ public class DBHelper {
 
         try (
                 var conn = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/aqa-shop", "aqa", "mypass"
+                        "jdbc:mysql://localhost:3306/aqa-shop", "aqa", "admin"
                 );
                 var deleteStmt = conn.createStatement();
         ) {
